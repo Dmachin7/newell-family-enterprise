@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Newell Family Enterprise LLC | Soft Washing Spring Hill, FL</title>
   <meta name="description" content="Professional exterior soft washing, roof washing, driveway cleaning and more. Licensed, bonded, insured. Serving Spring Hill, FL.">
+  <meta name="theme-color" content="#2B2B2B">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,7 +25,7 @@
       --font-body: 'Open Sans', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; background: var(--charcoal); }
     body { font-family: var(--font-body); color: var(--charcoal); background: var(--charcoal); overflow-x: hidden; }
     img { max-width: 100%; display: block; }
     a { text-decoration: none; color: inherit; }
@@ -62,13 +63,16 @@
       box-shadow: none;
     }
 
-    .nav-logo-img { display: none; }
+    /* At top (transparent nav): SVG text fallback; when scrolled (dark bg): PNG logo */
+    .nav-logo-img { display: none; height: 52px; width: auto; }
+    #nav.scrolled .nav-logo-img { display: block; }
     #nav > a:first-child { display: flex; align-items: center; background: transparent; line-height: 0; }
     .nav-logo-fallback {
       display: flex;
       align-items: center;
       gap: 8px;
     }
+    #nav.scrolled .nav-logo-fallback { display: none; }
     .nav-logo-fallback span {
       font-family: var(--font-head);
       font-size: 15px;
@@ -324,8 +328,8 @@
     .section-desc.light { color: rgba(255,255,255,0.7); }
 
     /* Scroll fade */
-    .fi { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fi.vis { opacity: 1; transform: translateY(0); }
+    .fi { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; will-change: opacity, transform; }
+    .fi.vis { opacity: 1; transform: translateY(0); will-change: auto; }
     .fi.d1 { transition-delay: 0.08s; }
     .fi.d2 { transition-delay: 0.16s; }
     .fi.d3 { transition-delay: 0.24s; }
@@ -683,6 +687,17 @@
       .services-grid { grid-template-columns: 1fr; }
       section { padding: 64px 16px; }
     }
+
+    @media (max-width: 768px) {
+      /* Faster hero animation on mobile */
+      .hero-bg { animation-duration: 5s; }
+      .hwi.in { animation-duration: 0.38s; }
+      /* Lighter blur on mobile for GPU performance */
+      #nav.scrolled {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+    }
   </style>
 </head>
 <body>
@@ -877,8 +892,8 @@
       <!-- Pair 1: Driveway -->
       <div class="ba-card fi d1">
         <div class="ba-slider" data-slider>
-          <img class="ba-before" src="images/dirty-driveway" alt="Dirty driveway before cleaning">
-          <img class="ba-after"  src="images/clean-driveway.jpg" alt="Clean driveway after pressure washing">
+          <img class="ba-before" src="images/dirty-driveway" alt="Dirty driveway before cleaning" loading="lazy" decoding="async">
+          <img class="ba-after"  src="images/clean-driveway.jpg" alt="Clean driveway after pressure washing" loading="lazy" decoding="async">
           <div class="ba-handle">
             <div class="ba-line"></div>
             <div class="ba-btn">
@@ -897,8 +912,8 @@
       <!-- Pair 2: House -->
       <div class="ba-card fi d2">
         <div class="ba-slider" data-slider>
-          <img class="ba-before" src="images/dirty-house.jpg" alt="Dirty house before soft washing">
-          <img class="ba-after"  src="images/clean-house.jpg" alt="Clean house after soft washing">
+          <img class="ba-before" src="images/dirty-house.jpg" alt="Dirty house before soft washing" loading="lazy" decoding="async">
+          <img class="ba-after"  src="images/clean-house.jpg" alt="Clean house after soft washing" loading="lazy" decoding="async">
           <div class="ba-handle">
             <div class="ba-line"></div>
             <div class="ba-btn">
@@ -917,8 +932,8 @@
       <!-- Pair 3: Side of house -->
       <div class="ba-card fi d3">
         <div class="ba-slider" data-slider>
-          <img class="ba-before" src="images/dirty-side-of-house.jpg" alt="Dirty side of house before cleaning">
-          <img class="ba-after"  src="images/clean-side-of-house.jpg" alt="Clean side of house after washing">
+          <img class="ba-before" src="images/dirty-side-of-house.jpg" alt="Dirty side of house before cleaning" loading="lazy" decoding="async">
+          <img class="ba-after"  src="images/clean-side-of-house.jpg" alt="Clean side of house after washing" loading="lazy" decoding="async">
           <div class="ba-handle">
             <div class="ba-line"></div>
             <div class="ba-btn">
@@ -944,7 +959,7 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-img-wrap fi">
-        <img src="images/truck-2-logo.jpg" alt="Newell Family Enterprise truck and equipment">
+        <img src="images/truck-2-logo.jpg" alt="Newell Family Enterprise truck and equipment" loading="lazy" decoding="async">
         <div class="about-img-tag">Spring Hill, FL</div>
       </div>
 
@@ -1129,7 +1144,7 @@
       <!-- Brand -->
       <div>
         <div class="f-logo">
-          <img src="images/logo.png" alt="Newell Family Enterprise LLC"
+          <img src="images/logo.png" alt="Newell Family Enterprise LLC" loading="lazy" decoding="async"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
           <div class="f-logo-fb">
             <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
@@ -1219,25 +1234,25 @@ function startHero() {
 
   var inners = hl.querySelectorAll('.hwi');
   inners.forEach(function(el, i) {
-    setTimeout(function() { el.classList.add('in'); }, 300 + i * 80);
+    setTimeout(function() { el.classList.add('in'); }, 180 + i * 60);
   });
 
-  var done = 300 + WORDS.length * 80 + 520;
+  var done = 180 + WORDS.length * 60 + 400;
 
   // Underline
   setTimeout(function() { ul.classList.add('drawn'); }, done);
 
   // Sub fade
   setTimeout(function() {
-    sub.style.transition = 'opacity 0.65s ease';
+    sub.style.transition = 'opacity 0.55s ease';
     sub.style.opacity = '1';
-  }, done + 280);
+  }, done + 180);
 
   // CTAs fade
   setTimeout(function() {
-    ctas.style.transition = 'opacity 0.65s ease';
+    ctas.style.transition = 'opacity 0.55s ease';
     ctas.style.opacity = '1';
-  }, done + 560);
+  }, done + 340);
 }
 
 /* ============================================================
