@@ -55,24 +55,13 @@
       box-shadow: 0 1px 24px rgba(0,0,0,0.45);
     }
 
-    /* When nav is transparent (top of page), quote button is outline — no orange blob */
-    #nav:not(.scrolled) .btn-primary {
-      background: transparent;
-      border-color: rgba(255,255,255,0.65);
-      color: #fff;
-      box-shadow: none;
-    }
-
-    /* At top (transparent nav): SVG text fallback; when scrolled (dark bg): PNG logo */
-    .nav-logo-img { display: none; height: 52px; width: auto; }
-    #nav.scrolled .nav-logo-img { display: block; }
-    #nav > a:first-child { display: flex; align-items: center; background: transparent; line-height: 0; }
+    .nav-logo-img { display: block; height: 48px; width: auto; border-radius: 6px; }
+    #nav > a:first-child { display: flex; align-items: center; background: rgba(0,0,0,0.35); border-radius: 8px; padding: 3px 8px; line-height: 0; }
     .nav-logo-fallback {
-      display: flex;
+      display: none;
       align-items: center;
       gap: 8px;
     }
-    #nav.scrolled .nav-logo-fallback { display: none; }
     .nav-logo-fallback span {
       font-family: var(--font-head);
       font-size: 15px;
@@ -729,7 +718,6 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12 19.79 19.79 0 011.61 3.41 2 2 0 013.59 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 8.56a16 16 0 006 6l.92-.92a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16z"/></svg>
       (813) 857-3976
     </a>
-    <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleNav()">
       <span></span><span></span><span></span>
     </button>
