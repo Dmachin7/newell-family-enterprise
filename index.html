@@ -857,8 +857,8 @@
             <div class="ba-line"></div>
             <div class="ba-btn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"/>
-                <polyline points="21 18 15 12 21 6"/>
+                <polyline points="10 18 4 12 10 6"/>
+                <polyline points="14 6 20 12 14 18"/>
               </svg>
             </div>
           </div>
@@ -877,8 +877,8 @@
             <div class="ba-line"></div>
             <div class="ba-btn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"/>
-                <polyline points="21 18 15 12 21 6"/>
+                <polyline points="10 18 4 12 10 6"/>
+                <polyline points="14 6 20 12 14 18"/>
               </svg>
             </div>
           </div>
@@ -897,8 +897,8 @@
             <div class="ba-line"></div>
             <div class="ba-btn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"/>
-                <polyline points="21 18 15 12 21 6"/>
+                <polyline points="10 18 4 12 10 6"/>
+                <polyline points="14 6 20 12 14 18"/>
               </svg>
             </div>
           </div>
@@ -1297,8 +1297,8 @@ document.querySelectorAll('[data-slider]').forEach(function(slider) {
   window.addEventListener('mousemove', function(e) { if (active) setPos(e.clientX); });
   window.addEventListener('mouseup',   function()  { active = false; });
 
-  // Touch
-  slider.addEventListener('touchstart', function(e) {
+  // Touch – only activate when dragging from the handle (prevents slider jumping when scrolling over image)
+  handle.addEventListener('touchstart', function(e) {
     active = true;
     setPos(e.touches[0].clientX);
   }, { passive: true });
