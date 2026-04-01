@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newell Family Enterprise LLC | Soft Washing Spring Hill, FL</title>
+  <meta name="description" content="Professional exterior soft washing, roof washing, driveway cleaning and more. Licensed, bonded, insured. Serving Spring Hill, FL.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       RESET & VARIABLES
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #FF6B00;
+      --charcoal: #2B2B2B;
+      --white: #ffffff;
+      --light: #f5f5f5;
+      --nav-h: 72px;
+      --font-head: 'Oswald', sans-serif;
+      --font-body: 'Open Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--charcoal); background: var(--charcoal); overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: none;
+      border: none;
+      outline: none;
+      box-shadow: none;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    #nav.scrolled {
+      background: rgba(30,30,30,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 24px rgba(0,0,0,0.45);
+    }
+
+    /* When nav is transparent (top of page), quote button is outline — no orange blob */
+    #nav:not(.scrolled) .btn-primary {
+      background: transparent;
+      border-color: rgba(255,255,255,0.65);
+      color: #fff;
+      box-shadow: none;
+    }
+
+    .nav-logo-img { height: 72px; width: auto; display: block; background: transparent; }
+    #nav > a:first-child { display: flex; align-items: center; background: transparent; line-height: 0; }
+    .nav-logo-fallback {
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo-fallback span {
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--orange);
+      line-height: 1.1;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+
+    .nav-links { display: flex; list-style: none; gap: 22px; }
+    .nav-links a {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    .nav-phone {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 22px;
+      border-radius: 4px;
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.22s;
+    }
+    .btn-primary { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .btn-primary:hover { background: #e05e00; border-color: #e05e00; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(255,107,0,0.38); }
+    .btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.65); }
+    .btn-outline:hover { background: #fff; color: var(--charcoal); border-color: #fff; }
+    .btn-lg { padding: 14px 34px; font-size: 15px; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.28s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    #mob-nav {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0;
+      background: var(--charcoal);
+      z-index: 998;
+      flex-direction: column;
+      padding: 8px 28px 28px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      transform: translateY(-110%);
+      transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+      display: flex;
+      pointer-events: none;
+    }
+    #mob-nav.open { transform: translateY(0); pointer-events: all; }
+    #mob-nav a {
+      font-family: var(--font-head);
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.85);
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: color 0.2s;
+    }
+    #mob-nav a:hover { color: var(--orange); }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/truck-1-logo.jpg') center/cover no-repeat;
+      transform: scale(1.08);
+      animation: ken-burns 7s ease-out forwards;
+      will-change: transform;
+    }
+    @keyframes ken-burns { to { transform: scale(1); } }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(20,20,20,0.78) 0%, rgba(20,20,20,0.48) 60%, rgba(20,20,20,0.18) 100%);
+    }
+
+    /* Orange glow anchored to the content area, well below the nav */
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 50% 50% at 22% 72%, rgba(255,107,0,0.22) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 80px 48px 80px;
+      max-width: 780px;
+      margin-left: clamp(16px, 5vw, 80px);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--orange);
+      background: rgba(255,107,0,0.12);
+      color: var(--orange);
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      opacity: 0;
+    }
+
+    .hero-headline {
+      font-family: var(--font-head);
+      font-size: clamp(40px, 6.5vw, 76px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.03;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      margin-bottom: 10px;
+    }
+    .hw { display: inline-block; overflow: hidden; vertical-align: bottom; margin-right: 0.22em; }
+    .hwi { display: inline-block; transform: translateY(105%); opacity: 0; }
+    .hwi.in { animation: word-up 0.52s cubic-bezier(0.22,1,0.36,1) forwards; }
+    @keyframes word-up { to { transform: translateY(0); opacity: 1; } }
+
+    .hero-underline {
+      height: 4px;
+      background: var(--orange);
+      border-radius: 2px;
+      width: 0;
+      margin-bottom: 24px;
+      transition: width 0.65s cubic-bezier(0.4,0,0.2,1);
+    }
+    .hero-underline.drawn { width: 220px; }
+
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 19px);
+      color: rgba(255,255,255,0.82);
+      line-height: 1.65;
+      max-width: 520px;
+      margin-bottom: 36px;
+      opacity: 0;
+    }
+
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; }
+
+    @keyframes pulse-glow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(255,107,0,0.5); }
+      50%      { box-shadow: 0 0 0 11px rgba(255,107,0,0); }
+    }
+    .btn-pulse { animation: pulse-glow 2.6s ease-in-out infinite; }
+
+    /* ============================================================
+       TRUST BAR
+    ============================================================ */
+    .trust-bar {
+      background: var(--orange);
+      padding: 13px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px 22px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-head);
+      font-size: 13px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .trust-dot { color: rgba(255,255,255,0.45); font-size: 18px; }
+
+    /* ============================================================
+       SHARED SECTION STYLES
+    ============================================================ */
+    section { padding: 88px 24px; }
+    .container { max-width: 1140px; margin: 0 auto; }
+    .section-tag {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+    }
+    .section-title.light { color: #fff; }
+    .section-desc { font-size: 15px; color: #666; line-height: 1.72; max-width: 580px; margin-bottom: 50px; }
+    .section-desc.light { color: rgba(255,255,255,0.7); }
+
+    /* Scroll fade */
+    .fi { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fi.vis { opacity: 1; transform: translateY(0); }
+    .fi.d1 { transition-delay: 0.08s; }
+    .fi.d2 { transition-delay: 0.16s; }
+    .fi.d3 { transition-delay: 0.24s; }
+    .fi.d4 { transition-delay: 0.32s; }
+    .fi.d5 { transition-delay: 0.40s; }
+    .fi.d6 { transition-delay: 0.48s; }
+
+    /* ============================================================
+       SERVICES
+    ============================================================ */
+    #services { background: var(--light); }
+    .services-hd { text-align: center; }
+    .services-hd .section-desc { margin: 0 auto 50px; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .svc-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 32px 26px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+      border-top: 4px solid transparent;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .svc-card:hover { border-top-color: var(--orange); transform: translateY(-5px); box-shadow: 0 10px 32px rgba(0,0,0,0.11); }
+
+    .svc-icon {
+      width: 50px; height: 50px;
+      background: rgba(255,107,0,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .svc-icon svg { width: 26px; height: 26px; stroke: var(--orange); }
+
+    .svc-card h3 {
+      font-family: var(--font-head);
+      font-size: 17px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 9px;
+    }
+    .svc-card p { font-size: 13px; color: #666; line-height: 1.65; }
+
+    /* House Special Banner */
+    .hs-banner {
+      background: linear-gradient(130deg, var(--orange) 0%, #ff8c00 100%);
+      border-radius: 10px;
+      padding: 28px 36px;
+      margin-top: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+      box-shadow: 0 8px 28px rgba(255,107,0,0.28);
+    }
+    .hs-banner h3 { font-family: var(--font-head); font-size: 24px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.03em; }
+    .hs-banner p { color: rgba(255,255,255,0.88); font-size: 14px; margin-top: 4px; }
+    .btn-white { background: #fff; color: var(--orange); border-color: #fff; }
+    .btn-white:hover { background: var(--charcoal); border-color: var(--charcoal); color: #fff; }
+
+    /* ============================================================
+       BEFORE / AFTER GALLERY
+    ============================================================ */
+    #gallery { background: var(--charcoal); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .ba-card { border-radius: 10px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+
+    .ba-slider {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      cursor: col-resize;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .ba-slider img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .ba-before { z-index: 1; }
+    .ba-after  { z-index: 2; clip-path: inset(0 0 0 50%); }
+
+    .ba-handle {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      width: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+    }
+    .ba-line { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 3px; background: var(--orange); }
+    .ba-btn {
+      width: 42px; height: 42px;
+      background: var(--orange);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+      position: relative; z-index: 1;
+      flex-shrink: 0;
+    }
+    .ba-btn svg { width: 20px; height: 20px; stroke: #fff; }
+
+    .ba-lbl {
+      position: absolute;
+      bottom: 10px;
+      font-family: var(--font-head);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 3px;
+      z-index: 4;
+    }
+    .ba-lbl.before { left: 10px; background: rgba(0,0,0,0.6); color: #fff; }
+    .ba-lbl.after  { right: 10px; background: rgba(255,107,0,0.92); color: #fff; }
+
+    .ba-caption { padding: 11px; background: #1c1c1c; text-align: center; }
+    .ba-caption span { font-family: var(--font-head); font-size: 13px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.07em; }
+
+    /* ============================================================
+       ABOUT
+    ============================================================ */
+    #about { background: #fff; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+
+    .about-img-wrap { position: relative; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.14); }
+    .about-img-wrap img { width: 100%; height: 420px; object-fit: cover; }
+    .about-img-tag {
+      position: absolute; bottom: 18px; left: 18px;
+      background: var(--orange);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 12px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 7px 14px; border-radius: 5px;
+    }
+
+    .about-text p { font-size: 15px; color: #555; line-height: 1.78; margin-bottom: 15px; }
+
+    .creds { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .cred {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--light);
+      border-radius: 7px;
+      padding: 9px 15px;
+      font-family: var(--font-head);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .cred svg { stroke: var(--orange); width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ============================================================
+       TESTIMONIALS
+    ============================================================ */
+    #testimonials { background: var(--light); text-align: center; }
+
+    .tcard {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 14px;
+      padding: 48px 40px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+      position: relative;
+    }
+    .tcard::before {
+      content: '\201C';
+      position: absolute;
+      top: -18px; left: 36px;
+      font-size: 110px;
+      color: var(--orange);
+      font-family: Georgia, serif;
+      line-height: 1;
+      opacity: 0.12;
+    }
+
+    .stars { display: flex; justify-content: center; gap: 4px; margin-bottom: 20px; }
+    .stars svg { width: 20px; height: 20px; fill: #f59e0b; }
+
+    .ttext { font-size: 17px; line-height: 1.72; color: #444; font-style: italic; margin-bottom: 26px; }
+
+    .tauthor { display: flex; align-items: center; justify-content: center; gap: 14px; }
+    .tavatar {
+      width: 48px; height: 48px;
+      background: var(--orange);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head);
+      font-size: 18px; font-weight: 700; color: #fff;
+    }
+    .tinfo strong { display: block; font-family: var(--font-head); font-size: 15px; color: var(--charcoal); }
+    .tinfo span { font-size: 12px; color: #999; }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    #contact { background: var(--charcoal); }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.45fr; gap: 64px; align-items: start; }
+
+    .c-info .section-title { color: #fff; }
+    .c-info > p { color: rgba(255,255,255,0.66); font-size: 15px; line-height: 1.7; margin-bottom: 30px; }
+
+    .c-detail { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+    .c-icon {
+      width: 42px; height: 42px;
+      background: rgba(255,107,0,0.13);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .c-icon svg { stroke: var(--orange); width: 19px; height: 19px; }
+    .c-text strong { display: block; font-family: var(--font-head); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+    .c-text a, .c-text span { display: block; color: rgba(255,255,255,0.82); font-size: 14px; line-height: 1.6; }
+    .c-text a:hover { color: var(--orange); }
+    .c-text .muted { color: rgba(255,255,255,0.38); }
+
+    /* Form */
+    .qform {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 12px;
+      padding: 36px;
+    }
+    .qform h3 { font-family: var(--font-head); font-size: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #fff; margin-bottom: 22px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fg { margin-bottom: 14px; }
+    .fg label { display: block; font-family: var(--font-head); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 7px; }
+    .fg input, .fg select, .fg textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 6px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .fg select option { background: #2b2b2b; }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--orange); background: rgba(255,255,255,0.1); }
+    .fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .fg textarea { resize: vertical; min-height: 110px; }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 24px;
+      color: #4ade80;
+    }
+    .form-success svg { margin: 0 auto 12px; }
+    .form-success p { font-family: var(--font-head); font-size: 18px; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer { background: #191919; padding: 60px 24px 24px; }
+    .footer-wrap { max-width: 1140px; margin: 0 auto; }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 44px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .f-logo img { height: 58px; width: auto; display: block; background: transparent; margin-bottom: 14px; }
+    .f-logo-fb { display: none; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .f-logo-fb span { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--orange); line-height: 1.1; }
+
+    .f-tagline { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.65; margin-bottom: 18px; }
+
+    .socials { display: flex; gap: 10px; }
+    .social-a {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.55);
+      transition: all 0.2s;
+    }
+    .social-a:hover { background: var(--orange); color: #fff; }
+    .social-a svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .fcol h4 { font-family: var(--font-head); font-size: 12px; font-weight: 600; letter-spacing: 0.17em; text-transform: uppercase; color: var(--orange); margin-bottom: 15px; }
+    .fcol ul { list-style: none; }
+    .fcol ul li { margin-bottom: 9px; }
+    .fcol ul li a, .fcol a { font-size: 13px; color: rgba(255,255,255,0.5); display: block; margin-bottom: 8px; transition: color 0.2s; }
+    .fcol ul li a:hover, .fcol a:hover { color: var(--orange); }
+    .fcol p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.65; }
+
+    .footer-bottom {
+      padding-top: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.28); }
+    .footer-bottom a { font-size: 12px; color: rgba(255,255,255,0.28); transition: color 0.2s; }
+    .footer-bottom a:hover { color: var(--orange); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --nav-h: 62px; }
+      .nav-links, .nav-phone { display: none; }
+      .hamburger { display: flex; }
+      .hero-content { padding: 56px 22px; margin-left: 0; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .about-img-wrap img { height: 270px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .qform { padding: 24px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .hs-banner { flex-direction: column; text-align: center; }
+      .tcard { padding: 36px 22px; }
+    }
+
+    @media (max-width: 520px) {
+      .services-grid { grid-template-columns: 1fr; }
+      section { padding: 64px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<nav id="nav">
+  <a href="#hero">
+    <img class="nav-logo-img" src="images/logo.png" alt="Newell Family Enterprise LLC"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="nav-logo-fallback">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <path d="M2 15 L15 4 L28 15" stroke="#FF6B00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <rect x="5" y="15" width="20" height="12" rx="1" stroke="#FF6B00" stroke-width="2" fill="none"/>
+      </svg>
+      <span>NEWELL FAMILY<br>ENTERPRISE LLC</span>
+    </div>
+  </a>
+
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-phone" href="tel:8138573976">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12 19.79 19.79 0 011.61 3.41 2 2 0 013.59 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 8.56a16 16 0 006 6l.92-.92a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16z"/></svg>
+      (813) 857-3976
+    </a>
+    <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div id="mob-nav">
+  <a href="#services" onclick="closeNav()">Services</a>
+  <a href="#gallery" onclick="closeNav()">Gallery</a>
+  <a href="#about" onclick="closeNav()">About</a>
+  <a href="#contact" onclick="closeNav()">Contact</a>
+  <a href="tel:8138573976" onclick="closeNav()" style="color:var(--orange)">(813) 857-3976</a>
+  <a href="tel:3524428021" onclick="closeNav()" style="color:var(--orange)">(352) 442-8021</a>
+  <a href="#contact" onclick="closeNav()" class="btn btn-primary" style="margin-top:6px;justify-content:center;">Get a Free Quote</a>
+</div>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge" id="hero-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+      Spring Hill, FL's Trusted Exterior Cleaning Pros
+    </div>
+    <h1 class="hero-headline" id="hero-hl"></h1>
+    <div class="hero-underline" id="hero-ul"></div>
+    <p class="hero-sub" id="hero-sub">From roofs to driveways, we restore your property's curb appeal using safe, eco-friendly soft washing — no damage, just results.</p>
+    <div class="hero-ctas" id="hero-ctas">
+      <a href="tel:8138573976" class="btn btn-primary btn-lg btn-pulse">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12 19.79 19.79 0 011.61 3.41 2 2 0 013.59 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 8.56a16 16 0 006 6l.92-.92a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16z"/></svg>
+        Call Now
+      </a>
+      <a href="#contact" class="btn btn-outline btn-lg">Get a Free Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRUST BAR
+============================================================ -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Licensed
+  </div>
+  <span class="trust-dot">·</span>
+  <div class="trust-item">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    Bonded
+  </div>
+  <span class="trust-dot">·</span>
+  <div class="trust-item">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+    Insured
+  </div>
+  <span class="trust-dot">·</span>
+  <div class="trust-item">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    Family Owned
+  </div>
+  <span class="trust-dot">·</span>
+  <div class="trust-item">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    Serving Spring Hill, FL
+  </div>
+</div>
+
+<!-- ============================================================
+     SERVICES
+============================================================ -->
+<section id="services">
+  <div class="container">
+    <div class="services-hd fi">
+      <span class="section-tag">What We Do</span>
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-desc">Professional exterior cleaning for homes and businesses across Spring Hill and surrounding Hernando & Pasco counties.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="svc-card fi d1">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Exterior House Soft Washing</h3>
+        <p>Safely remove mold, mildew, algae, and grime from siding, stucco, and painted surfaces without high-pressure damage.</p>
+      </div>
+
+      <div class="svc-card fi d2">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M8 9 Q12 5 16 9"/><path d="M6 11 Q12 6 18 11"/></svg>
+        </div>
+        <h3>Roof Washing</h3>
+        <p>Eliminate black streaks, lichen, and algae from shingles and tile roofs using low-pressure, contractor-approved treatments.</p>
+      </div>
+
+      <div class="svc-card fi d3">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h3>Driveways & Sidewalks</h3>
+        <p>Blast away oil stains, rust, and built-up grime from concrete and paver surfaces — restoring them to like-new condition.</p>
+      </div>
+
+      <div class="svc-card fi d4">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V10l7-6 7 6v10"/><path d="M9 20v-5h6v5"/><path d="M12 3v4M8 8l-3 2M16 8l3 2"/></svg>
+        </div>
+        <h3>Pool Decks & Cages</h3>
+        <p>Remove algae, mildew, and mineral deposits from pool decks, coping, and screen enclosure frames safely and thoroughly.</p>
+      </div>
+
+      <div class="svc-card fi d5">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+        </div>
+        <h3>Screen Enclosures</h3>
+        <p>Carefully clean screen panels, frames, and sills — removing dirt, pollen, mold, and oxidation without tearing or warping.</p>
+      </div>
+
+      <div class="svc-card fi d6">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4"/><path d="M12 16h.01"/><path d="M7 10s1-4 5-4 5 4 5 4"/></svg>
+        </div>
+        <h3>Lawn Care & Property Maintenance</h3>
+        <p>Keep your property looking its best year-round with reliable lawn maintenance and exterior upkeep services.</p>
+      </div>
+    </div>
+
+    <!-- House Special Banner -->
+    <div class="hs-banner fi">
+      <div>
+        <h3>📣 Call For House Special!</h3>
+        <p>Ask about our exclusive pricing on complete exterior house soft washing packages.</p>
+      </div>
+      <a href="tel:8138573976" class="btn btn-white">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12 19.79 19.79 0 011.61 3.41 2 2 0 013.59 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 8.56a16 16 0 006 6l.92-.92a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16z"/></svg>
+        Call (813) 857-3976
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BEFORE / AFTER GALLERY
+============================================================ -->
+<section id="gallery">
+  <div class="container">
+    <div class="fi">
+      <span class="section-tag">Our Work</span>
+      <h2 class="section-title light">Before &amp; After</h2>
+      <p class="section-desc light">Drag the handle to see the transformation. Real results from real jobs.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- Pair 1: Driveway -->
+      <div class="ba-card fi d1">
+        <div class="ba-slider" data-slider>
+          <img class="ba-before" src="images/dirty-driveway" alt="Dirty driveway before cleaning">
+          <img class="ba-after"  src="images/clean-driveway.jpg" alt="Clean driveway after pressure washing">
+          <div class="ba-handle">
+            <div class="ba-line"></div>
+            <div class="ba-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+                <polyline points="21 18 15 12 21 6"/>
+              </svg>
+            </div>
+          </div>
+          <span class="ba-lbl before">Before</span>
+          <span class="ba-lbl after">After</span>
+        </div>
+        <div class="ba-caption"><span>Driveway Cleaning</span></div>
+      </div>
+
+      <!-- Pair 2: House -->
+      <div class="ba-card fi d2">
+        <div class="ba-slider" data-slider>
+          <img class="ba-before" src="images/dirty-house.jpg" alt="Dirty house before soft washing">
+          <img class="ba-after"  src="images/clean-house.jpg" alt="Clean house after soft washing">
+          <div class="ba-handle">
+            <div class="ba-line"></div>
+            <div class="ba-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+                <polyline points="21 18 15 12 21 6"/>
+              </svg>
+            </div>
+          </div>
+          <span class="ba-lbl before">Before</span>
+          <span class="ba-lbl after">After</span>
+        </div>
+        <div class="ba-caption"><span>Exterior House Soft Washing</span></div>
+      </div>
+
+      <!-- Pair 3: Side of house -->
+      <div class="ba-card fi d3">
+        <div class="ba-slider" data-slider>
+          <img class="ba-before" src="images/dirty-side-of-house.jpg" alt="Dirty side of house before cleaning">
+          <img class="ba-after"  src="images/clean-side-of-house.jpg" alt="Clean side of house after washing">
+          <div class="ba-handle">
+            <div class="ba-line"></div>
+            <div class="ba-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+                <polyline points="21 18 15 12 21 6"/>
+              </svg>
+            </div>
+          </div>
+          <span class="ba-lbl before">Before</span>
+          <span class="ba-lbl after">After</span>
+        </div>
+        <div class="ba-caption"><span>Side of House Washing</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT
+============================================================ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap fi">
+        <img src="images/truck-2-logo.jpg" alt="Newell Family Enterprise truck and equipment">
+        <div class="about-img-tag">Spring Hill, FL</div>
+      </div>
+
+      <div class="fi d2">
+        <span class="section-tag">Who We Are</span>
+        <h2 class="section-title">A Family Business<br>Built on Trust</h2>
+        <div class="about-text">
+          <p>Newell Family Enterprise LLC was founded on a simple belief: your home deserves the same care we'd give our own. As a family-owned and operated business based right here in Spring Hill, FL, we take pride in every job — big or small.</p>
+          <p>We specialize in exterior soft washing — a gentler, more effective alternative to high-pressure washing that removes contaminants at the source without damaging your home's surfaces. Whether it's a dingy roof, a mossy driveway, or mildew-covered siding, we have the equipment and expertise to handle it.</p>
+          <p>Our team is fully licensed, bonded, and insured, and we serve both residential and commercial clients throughout Hernando and Pasco counties. When you hire us, you're hiring neighbors who care about your property.</p>
+        </div>
+        <div class="creds">
+          <div class="cred">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Licensed
+          </div>
+          <div class="cred">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Bonded
+          </div>
+          <div class="cred">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            Insured
+          </div>
+          <div class="cred">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            Family Owned
+          </div>
+          <div class="cred">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Spring Hill, FL
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+============================================================ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="fi" style="text-align:center;margin-bottom:40px;">
+      <span class="section-tag">What Clients Say</span>
+      <h2 class="section-title">Real Reviews</h2>
+    </div>
+
+    <div class="tcard fi d2">
+      <div class="stars">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+      </div>
+      <p class="ttext">"Newell Family Enterprise did an outstanding job on my house and driveway. The before and after difference was incredible — like a brand new property. Very professional, on time, and reasonably priced. I will definitely use them again and highly recommend them to everyone in the area!"</p>
+      <div class="tauthor">
+        <div class="tavatar">SF</div>
+        <div class="tinfo">
+          <strong>Shaun Flowers</strong>
+          <span>Spring Hill, FL · Verified Customer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT / QUOTE FORM
+============================================================ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Info -->
+      <div class="c-info fi">
+        <span class="section-tag">Get In Touch</span>
+        <h2 class="section-title">Request a<br>Free Quote</h2>
+        <p>Ready to restore your property? Fill out the form or give us a call. We respond quickly and provide honest, no-obligation estimates.</p>
+
+        <div class="c-detail">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12 19.79 19.79 0 011.61 3.41 2 2 0 013.59 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 8.56a16 16 0 006 6l.92-.92a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16z"/></svg>
+          </div>
+          <div class="c-text">
+            <strong>Phone</strong>
+            <a href="tel:8138573976">(813) 857-3976</a>
+            <a href="tel:3524428021">(352) 442-8021</a>
+          </div>
+        </div>
+
+        <div class="c-detail">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="c-text">
+            <strong>Email</strong>
+            <a href="mailto:NFELLC2019@gmail.com">NFELLC2019@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="c-detail">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="c-text">
+            <strong>Business Hours</strong>
+            <span>Monday – Friday: 9AM – 5PM</span>
+            <span class="muted">Saturday – Sunday: Closed</span>
+          </div>
+        </div>
+
+        <div class="c-detail">
+          <div class="c-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="c-text">
+            <strong>Service Area</strong>
+            <span>Spring Hill, FL</span>
+            <span class="muted">Hernando &amp; Pasco County</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="qform fi d2">
+        <h3>Get Your Free Estimate</h3>
+        <form id="qform" onsubmit="handleSubmit(event)" novalidate>
+          <div class="form-row">
+            <div class="fg">
+              <label for="f-name">Full Name</label>
+              <input type="text" id="f-name" name="name" placeholder="John Smith" required>
+            </div>
+            <div class="fg">
+              <label for="f-phone">Phone Number</label>
+              <input type="tel" id="f-phone" name="phone" placeholder="(813) 555-0100" required>
+            </div>
+          </div>
+          <div class="fg">
+            <label for="f-email">Email Address</label>
+            <input type="email" id="f-email" name="email" placeholder="john@example.com" required>
+          </div>
+          <div class="fg">
+            <label for="f-service">Service Interest</label>
+            <select id="f-service" name="service" required>
+              <option value="" disabled selected>Select a service...</option>
+              <option>Exterior House Soft Washing</option>
+              <option>Roof Washing</option>
+              <option>Driveways &amp; Sidewalks</option>
+              <option>Pool Decks &amp; Cages</option>
+              <option>Screen Enclosures</option>
+              <option>Lawn Care &amp; Property Maintenance</option>
+              <option>Multiple Services</option>
+              <option>Other / Not Sure</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label for="f-msg">Message</label>
+            <textarea id="f-msg" name="message" placeholder="Tell us about your property and what needs cleaning..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px 22px;font-size:14px;">
+            Send My Quote Request
+          </button>
+        </form>
+        <div class="form-success" id="form-success">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <p>Thanks! We'll be in touch shortly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="footer-wrap">
+    <div class="footer-top">
+
+      <!-- Brand -->
+      <div>
+        <div class="f-logo">
+          <img src="images/logo.png" alt="Newell Family Enterprise LLC"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="f-logo-fb">
+            <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+              <path d="M3 17 L17 6 L31 17" stroke="#FF6B00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <rect x="6" y="17" width="22" height="13" rx="1" stroke="#FF6B00" stroke-width="2" fill="none"/>
+            </svg>
+            <span>NEWELL FAMILY<br>ENTERPRISE LLC</span>
+          </div>
+        </div>
+        <p class="f-tagline">Exterior House Soft Washing — Commercial &amp; Residential. Serving Spring Hill, FL and surrounding Hernando County.</p>
+        <div class="socials">
+          <a href="https://www.facebook.com/people/Newell-Family-Enterprise-llc/100076307829793/" target="_blank" rel="noopener noreferrer" class="social-a" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="fcol">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Exterior House Soft Washing</a></li>
+          <li><a href="#services">Roof Washing</a></li>
+          <li><a href="#services">Driveways &amp; Sidewalks</a></li>
+          <li><a href="#services">Pool Decks &amp; Cages</a></li>
+          <li><a href="#services">Screen Enclosures</a></li>
+          <li><a href="#services">Lawn Care</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div class="fcol">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#gallery">Before &amp; After</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#contact">Get a Quote</a></li>
+          <li><a href="https://www.facebook.com/people/Newell-Family-Enterprise-llc/100076307829793/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="fcol">
+        <h4>Contact Us</h4>
+        <a href="tel:8138573976">(813) 857-3976</a>
+        <a href="tel:3524428021">(352) 442-8021</a>
+        <a href="mailto:NFELLC2019@gmail.com">NFELLC2019@gmail.com</a>
+        <p style="margin-top:12px;">Mon–Fri: 9AM–5PM<br>Sat–Sun: Closed</p>
+        <p style="margin-top:8px;">Spring Hill, FL<br>Hernando County</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Newell Family Enterprise LLC · All rights reserved · Licensed · Bonded · Insured</p>
+      <a href="#hero">↑ Back to Top</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+/* ============================================================
+   HERO ANIMATIONS
+============================================================ */
+var WORDS = ["Florida's", "Trusted", "Soft", "Washing", "Experts"];
+
+window.addEventListener('load', startHero);
+
+function startHero() {
+  var badge = document.getElementById('hero-badge');
+  var hl    = document.getElementById('hero-hl');
+  var ul    = document.getElementById('hero-ul');
+  var sub   = document.getElementById('hero-sub');
+  var ctas  = document.getElementById('hero-ctas');
+
+  // Badge fade in
+  badge.style.transition = 'opacity 0.5s ease';
+  badge.style.opacity = '1';
+
+  // Build headline words
+  hl.innerHTML = WORDS.map(function(w) {
+    return '<span class="hw"><span class="hwi">' + w + '</span></span>';
+  }).join(' ');
+
+  var inners = hl.querySelectorAll('.hwi');
+  inners.forEach(function(el, i) {
+    setTimeout(function() { el.classList.add('in'); }, 300 + i * 80);
+  });
+
+  var done = 300 + WORDS.length * 80 + 520;
+
+  // Underline
+  setTimeout(function() { ul.classList.add('drawn'); }, done);
+
+  // Sub fade
+  setTimeout(function() {
+    sub.style.transition = 'opacity 0.65s ease';
+    sub.style.opacity = '1';
+  }, done + 280);
+
+  // CTAs fade
+  setTimeout(function() {
+    ctas.style.transition = 'opacity 0.65s ease';
+    ctas.style.opacity = '1';
+  }, done + 560);
+}
+
+/* ============================================================
+   STICKY NAV
+============================================================ */
+window.addEventListener('scroll', function() {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ============================================================
+   MOBILE NAV
+============================================================ */
+function toggleNav() {
+  var mob = document.getElementById('mob-nav');
+  var hbg = document.getElementById('hamburger');
+  var open = mob.classList.toggle('open');
+  hbg.classList.toggle('open', open);
+}
+function closeNav() {
+  document.getElementById('mob-nav').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+/* ============================================================
+   SMOOTH SCROLL (nav-height offset)
+============================================================ */
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = a.getAttribute('href');
+    if (id === '#') return;
+    var target = document.querySelector(id);
+    if (!target) return;
+    e.preventDefault();
+    var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navH, behavior: 'smooth' });
+  });
+});
+
+/* ============================================================
+   SCROLL FADE-IN (IntersectionObserver)
+============================================================ */
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.classList.add('vis');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+
+document.querySelectorAll('.fi').forEach(function(el) { io.observe(el); });
+
+/* ============================================================
+   BEFORE / AFTER SLIDERS
+   Works with mouse and touch. Drag the handle or click anywhere.
+============================================================ */
+document.querySelectorAll('[data-slider]').forEach(function(slider) {
+  var after  = slider.querySelector('.ba-after');
+  var handle = slider.querySelector('.ba-handle');
+  var active = false;
+
+  function setPos(clientX) {
+    var r = slider.getBoundingClientRect();
+    var pct = Math.max(2, Math.min(98, ((clientX - r.left) / r.width) * 100));
+    after.style.clipPath  = 'inset(0 0 0 ' + pct + '%)';
+    handle.style.left     = pct + '%';
+  }
+
+  // Init
+  after.style.clipPath = 'inset(0 0 0 50%)';
+  handle.style.left    = '50%';
+
+  // Mouse
+  slider.addEventListener('mousedown', function(e) { active = true; setPos(e.clientX); e.preventDefault(); });
+  window.addEventListener('mousemove', function(e) { if (active) setPos(e.clientX); });
+  window.addEventListener('mouseup',   function()  { active = false; });
+
+  // Touch
+  slider.addEventListener('touchstart', function(e) {
+    active = true;
+    setPos(e.touches[0].clientX);
+  }, { passive: true });
+  window.addEventListener('touchmove', function(e) {
+    if (active) setPos(e.touches[0].clientX);
+  }, { passive: true });
+  window.addEventListener('touchend', function() { active = false; });
+});
+
+/* ============================================================
+   CONTACT FORM SUBMIT
+============================================================ */
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('qform').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
