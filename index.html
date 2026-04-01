@@ -1158,9 +1158,12 @@ function startHero() {
   badge.style.opacity = '1';
 
   // Build headline words
-  hl.innerHTML = WORDS.map(function(w) {
-    return '<span class="hw"><span class="hwi">' + w + '</span></span>';
-  }).join(' ');
+  hl.innerHTML = WORDS.map(function(w, i) {
+    var span = '<span class="hw"><span class="hwi">' + w + '</span></span>';
+    if (i === 0) return span;
+    if (i === 2) return '<br>' + span;
+    return ' ' + span;
+  }).join('');
 
   var inners = hl.querySelectorAll('.hwi');
   inners.forEach(function(el, i) {
