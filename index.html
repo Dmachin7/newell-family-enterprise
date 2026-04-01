@@ -555,7 +555,10 @@
     }
 
     @media (max-width: 768px) {
-      .hero-content { padding: 56px 22px; margin-left: 0; }
+      #hero { align-items: stretch; }
+      .hero-content { padding: 56px 22px 52px; margin-left: 0; display: flex; flex-direction: column; }
+      .hero-ctas { flex-wrap: nowrap; margin-top: auto; }
+      .hero-ctas .btn { flex: 1; justify-content: center; font-size: 13px; padding: 12px 10px; }
       .hero-headline { font-size: clamp(26px, 8vw, 40px); }
       .about-grid { grid-template-columns: 1fr; gap: 36px; }
       .about-img-wrap img { height: 270px; }
